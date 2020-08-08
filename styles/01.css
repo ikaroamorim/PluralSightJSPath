@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html{
+    height: 100%;
+    background-color: honeydew;
+}
+
+.container{
+    max-width: 1200px;
+    padding: 0 2%;
+}
+
+.box{
+    background-color: midnightblue;
+    color: whitesmoke;
+    width: 600px;
+    margin: 10px 0;
+}
