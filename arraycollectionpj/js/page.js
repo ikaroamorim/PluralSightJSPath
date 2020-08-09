@@ -9,12 +9,89 @@ let yearlyLabel = document.getElementById('yearlyTotal')
 //Values from the form
 let newAmount = document.getElementById('itemAmount')
 let newMonth = document.getElementById('monthId')
+let hikingRadio = document.getElementById('hiking')
+let runningRadio = document.getElementById('running')
+let huntingRadio = document.getElementById('hunting')
 
 let yearlyTotal = 0
 
-let monthlySales = new Set(); //you can add initial values ...Set([1000,2000])
-let monthlyLabels = new Set(); //you can add objects ...Set([{test:'This'}])
 
+
+let monthlySales = new Map()
+
+function addSale(){
+    monthlySales.set(newMonth.value, parseInt(newAmount.value))
+    
+    //Update our labels
+    monthlySalesChart.data.labels = Array.from(monthlySales.keys())
+    monthlySalesChart.data.datasets[0].data = Array.from(monthlySales.values())
+
+    console.log(monthlySales.keys())
+    console.log(monthlySales.values())
+
+    yearlyTotal=0
+
+    for(let amount of monthlySales.values()){
+        yearlyTotal += amount
+        yearlyLabel.innerHTML= yearlyTotal
+
+        /* monthlySalesChart.data.datasets.forEach((dataset) => {
+            dataset.data.push(amount)
+        }) */
+    }
+    monthlySalesChart.update()
+}
+
+function findSale(){
+    console.log(monthlySales.get(1))
+}
+
+function deleteSale(){
+    monthlySales.delete(1)
+}
+
+// Bar
+var monthlySalesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: [{
+            label: '# of Sales',
+            data: [],
+            backgroundColor: [
+                'rgb(239,118,122)',
+                'rgb(238,184,104)',
+                'rgb(75,166,223)',
+                'rgb(239,118,122)',
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        scales: {
+            ticks: {
+                beginAtZero: true
+            }
+        }
+    }
+})
+
+
+//Map addSale
+//let monthlySales = new Set() //you can add initial values ...Set([1000,2000])
+//let monthlyLabels = new Set() //you can add objects ...Set([{test:'This'}])
+
+/*
+let hiking = {category:'Hiking'}
+let running = {category:'Running'}
+let hunting = {category:'Hunting'}
+
+const categories = new WeakSet()
+//categories.add(hiking, running, hunting)
+//alert(categories.has(hiking))
+
+
+//addSale using Set
 function addSale() {
     monthlySales.add(parseInt(newAmount.value))
     monthlyLabels.add(newMonth.value)
@@ -31,6 +108,16 @@ function addSale() {
 
     monthlySalesChart.data.labels = Array.from(monthlyLabels)
     monthlySalesChart.update()
+
+    if(hikingRadio.cheked){
+       categories.add(hiking) 
+    }else if(runningRadio.cheked){
+        categories.add(running)
+    }else if(huntingRadio){
+        categories.add(hunting)
+    }
+
+    console.log(categories)
 }
 
 function deleteVal() {
@@ -41,7 +128,7 @@ function deleteVal() {
     monthlyLabels.delete(newMonth.value)
     console.log(monthlySales)
 }
-
+*/
 
 
 
@@ -88,32 +175,6 @@ function resetNumbers(){
 */
 
 
-// Bar
-
-var monthlySalesChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [],
-        datasets: [{
-            label: '# of Sales',
-            data: monthlySales,
-            backgroundColor: [
-                'rgb(239,118,122)',
-                'rgb(238,184,104)',
-                'rgb(75,166,223)',
-                'rgb(239,118,122)',
-            ],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        scales: {
-            ticks: {
-                beginAtZero: true
-            }
-        }
-    }
-})
 /*
 // Pie
 var deptSalesChart = new Chart(pieCtx, {
