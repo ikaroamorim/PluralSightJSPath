@@ -1,53 +1,52 @@
-'use strict'; 
-(function() {
+'use strict';
+(function () {
+  /*
+  let date = new Date();
+  let date2 = new Date(1988, 8, 27, 14, 50, 32, 999)
+  display(date.toISOString())
+  display(date2.toISOString())
+  display(date.toString())
+  display(date2.toString())
+  display(date.toUTCString())
 
-  //object literal
-  let pessoa ={
-    primeiroNome: 'Ikaro',
-    sobrenome: 'Silva',
-    idade:32,
-    adulto : function(){ return `Eh adulto: ${this.idade >= 18}`}
+  display(date.getFullYear());
+  display(date.getMonth()); //Base Zero
+  display(date.getDate());
+  display(date.getHours());
+  display(date.getMinutes());
+  display(date.getSeconds());
+  display(date.getMilliseconds());
+
+  display((date-date2))
+  */
+
+  function checkPasswordComplexity(password) {
+    let regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$');
+    let regex2 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+
+    return regex.test(password)
   }
 
-  display(pessoa.primeiroNome)
-  display(pessoa['primeiroNome'])
-
-  let propertyName = 'sobrenome'
-  display(pessoa[propertyName])
-
-  //for in
-  for(let propName in pessoa){
-    display(`Propriedade: ${propName}, valor: ${pessoa[propName]}`)
-  }
+  display(checkPasswordComplexity('Weak'))
 
 
-  //é possível mudar propriedades de um objeto que está writable false
-  //Object.defineProperty(pessoa, 'sobrenome', {writable:false})
+  function findAlerts(logData) {
+    let regex = /ERROR(.*?):(.*?);/g;
+    let result = regex.exec(logData)
 
-  //porém não é possível mudá-las ese o objeto estiver congelado
-  //Object.freeze(pessoa)
-
-  
-
-  display(Object.getOwnPropertyDescriptor(pessoa, 'sobrenome'))
-
-
-  Object.defineProperty(pessoa, 'nome',{
-    get:function(){
-      return `O nome é ${pessoa.primeiroNome} ${pessoa.sobrenome}. \n`
-    },
-    set: function(value){
-      var nameParts = value.split(' ');
-      this.primeiroNome = nameParts[0];
-      this.sobrenome = nameParts[1];
+    while (result !== null) {
+      display(result[1])
+      display(result[2])
+      display('------------------------------------------')
+      result = regex.exec(logData)
     }
-  })
+    //displayRegexArray(regex.exec(logData))
+    //display('--------------------------------------------------------------------------------------')
+    //displayRegexArray(regex.exec(logData))
+  }
 
-  pessoa.nome = 'Ikaro Amorim';
-  display(pessoa.nome)
+  let logData = 'INFO:OK; ERROR(HIGH): SOMETHING BROKE; ALERT:SUCCESS; ERROR(LOW): STABILITY LOST;'
+  let result = findAlerts(logData);
 
-
-
-
-
+  display(result)
 })();
